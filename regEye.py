@@ -16,8 +16,9 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 bot_channel = 1050476403663048724
+rcr = 738635228066611292
 sendChannel = bot.get_channel(bot_channel)
-rcrChannel = bot.get_channel(695325795878568016)
+rcrChannel = bot.get_channel(rcr)
 botId = 1050457218295791616
 
 i = 0
@@ -33,8 +34,8 @@ async def get_channel(playerName, name):
             return
         else:
             sendChannel = bot.get_channel(bot_channel)
+            rcrChannel = bot.get_channel(rcr)
             channel = discord.utils.get(rcrChannel.guild.channels, name=playerName)
-            await sendChannel.send(f'This is a test: checking {channel}')
             # print(channel.id)
             await message_count(channel, name)
             i = 10000
@@ -47,6 +48,7 @@ async def message_count(channelId, name):
     sendChannel = bot.get_channel(bot_channel)
     channel = bot.get_channel(channelId)
     refId = channelId.id
+    print(channelId)
     count = 0
     async for _ in channelId.history(limit=None):
         count += 1
@@ -95,7 +97,8 @@ async def playerCheck(ctx, playerName):
         if names[i] in skip:
             i += 1
         elif names[i] not in skip:
-            await get_channel(names[i], playerName)
+            lowerName = (names[i].lower())
+            await get_channel(lowerName, playerName)
             skip.append(names[i])
             print(names[i])
             i += 1
@@ -103,4 +106,4 @@ async def playerCheck(ctx, playerName):
 
     # sendChannel.send(names)
 
-bot.run('DISCORD_TOKEN')
+bot.run(DISCORD_TOKEN)
