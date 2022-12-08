@@ -25,7 +25,7 @@ i = 0
 
 
 
-async def get_channel(playerName, name):
+async def get_channel(playerName, name, nameList):
     global i
     sendChannel = bot.get_channel(bot_channel)
     check = await sendChannel.fetch_message(sendChannel.last_message_id)
@@ -35,6 +35,7 @@ async def get_channel(playerName, name):
         else:
             sendChannel = bot.get_channel(bot_channel)
             rcrChannel = bot.get_channel(rcr)
+            for channel in rcrChannel.guild.text_channels:
             channel = discord.utils.get(rcrChannel.guild.channels, name=playerName)
             # print(channel.id)
             await message_count(channel, name)
@@ -98,7 +99,7 @@ async def playerCheck(ctx, playerName):
             i += 1
         elif names[i] not in skip:
             lowerName = (names[i].lower())
-            await get_channel(lowerName, playerName)
+            await get_channel(lowerName, playerName, names)
             skip.append(names[i])
             print(names[i])
             i += 1
